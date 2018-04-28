@@ -15,8 +15,6 @@ void testApp::setup(){
     //setup other modes/scenes
 	TM.setup();
 	CM.setup();
-    CCS.setup();
-    WS.setup();
 
     //initialise the mousecursor smoothing vector
 	eyeSmoothed.set(0,0,0);
@@ -31,11 +29,7 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 
-    //art mode has a different colour to the other scenes.
-    if (mode == MODE_ARTWORK){
-        ofBackground( ofColor( 175.95, 255, 237.15 ) );
-    }
-    else ofBackground( 30, 30, 30 );
+    ofBackground( 30, 30, 30 );
 
 	// update the tracking manager (and internally, its input manager)
 	TM.update();
@@ -95,13 +89,7 @@ void testApp::update(){
 			BT.x = ofRandom(100,ofGetWidth()-100);
 			BT.y = ofRandom(100,ofGetHeight()-100);
 		}
-	}
-    
-    //shell gaze artwork gets passed the smoothed lookLocation.
-    if (mode == MODE_ARTWORK && bLoadArtMode){
-        WS.update( eyeSmoothed );
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -121,14 +109,9 @@ void testApp::draw(){
 	if (mode == MODE_CALIBRATING)		         CM.draw(), TM.drawInput( (ofGetWidth()/2-TM.IM.width/8), 0, TM.IM.width/4, TM.IM.height/4, 0, 0, 0, 0, true );
     //draws buttonTriggers to play with the eyeTracking.
     if (mode == MODE_TEST)                       BT.draw(), CM.drawGUI();
-    //a come closer page to detect when faces are in view but too distant to detect eyes. (not yet doing this)
-    if (mode == MODE_COME_CLOSER)                CCS.draw();
-    //draw the gaze shell artwork.
-    if (mode == MODE_ARTWORK && bLoadArtMode)    WS.draw(), ofHideCursor();// TM.drawInput( (ofGetWidth()/2-TM.IM.width/8), 0, TM.IM.width/4, TM.IM.height/4, 0, 0, 0, 0, true );
-        
 
 	// draw a green dot to see how good the tracking is:
-    if ( (CM.fitter.bBeenFit || bMouseSimulation) && mode != MODE_ARTWORK ){
+    if ( CM.fitter.bBeenFit || bMouseSimulation ){
 		
 		ofSetColor(0,255,0,120);
 		ofFill();
