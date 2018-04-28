@@ -1,0 +1,89 @@
+
+								tweaking/updating eyewriter notes
+
+for ofxLibdcGrabber, error "Virtual 
+function 'getPixels' has a different 
+return type ('unsigned char *') than 
+the function it overrides (which has return 
+type 'ofPixels_<unsigned char> &')"
+											changed to an empty vector.
+bUseHomography is always = FALSE 		
+											REMOVED FROM trackingmanager.cpp&.h and eyeTracker.cpp&.h
+
+ofxControlPanel 'panel' 3y/o, drawn and
+updates mouse movements in tracking
+and calibration manager. 								
+											removed all 
+											ofxContolPanel stuff, may replace with ofxGUI later.
+trackingManager.ControlPanel.cpp
+											DELETED. full of 'panel' stuff from the old GUI system.
+saverscene only appears in 
+eyePlotterTestApp, added to a vector
+<baseScene *>.								
+											saverScene DELETED.
+gmlReader and uploader not used anywhere.
+											DELETED.
+pocohttpform using ofxTHREAD, not called
+anywhere. 
+											DELETED.
+ofxLibDC is breaking xcode, all the 
+'if(type == _LIBDC)'' have alternative 
+'else' statements.
+											only use the else statements. delete _LIBDC ones.
+apparently
+//in the case of a ptgrey (_LIBDC) camera,
+ we *know* which frame is which.
+//fcount = cam.getEmbeddedStrobeCounter
+(grayImage->getPixels());
+											only use alternative 'we're going to guess' statement.
+threadedPTVideoGrabber not called anywhere
+except fireflyVideoGRabber. firflyVG called
+only in inputManager. Problem children cus
+they use the broken ofxLibDC.
+											fireflyVidgrabber and threaded PTVideoGrabber deleted. fireflyVG not used in inputManager anymore.
+addons folder in src uses ofxOpenCV which
+is external addons folder, and ofxLibDC,
+which is broken and so has all mentions
+deleted already.
+											src>addons folder DELETED.
+vidGrabbers are broken all over the place
+											replace with ofVideograbber everywhere in inputManager, delete the whole threadedGrabber folder. Not referenced in any files any more.
+'threaded image saver' is breaking, IDK
+why I would need to save images anyway?
+											remove references in input manager, DELETE it.
+ofPixels handling has changed.
+											update all unsigned char* types to ofPixels types, update all .setFromPixels operations to not process width and height of target pixels.
+ofxContourFinder doesn't seem to ever find 
+any blobs. 									
+											Replaced with eye Training set from http://alereimondo.no-ip.org/OpenCV/34 utilising ofxCvHaarFinder.
+drawing eyePlotterTestApp for writing with
+eyes etc not needed for basic eye Tracking.
+											Removed along with calls in testApp.
+controlling all the variables which were 
+once handled by ofxControlPanel are useful
+for making proper pupil detection.
+											built a GUI to control these values and also switch off effects with boolean toggles using ofxGui.
+pupils not being detected 
+											fixed by increasing 'minBlobSize_p' with GUI. This would probably work with old contour detecting code for eyes. HaarFinder seems pretty robust for now.
+a few files in bin/data not useful anymore
+after stripping.
+											DELETED.
+Calibrations don't produce results. 
+Deugging with bMouseEyeInputSimulation = 
+true doesn't work.
+											Added code to push mouse positions to tracker. 
+Calibration currently works using glints, 
+which I'm not using as I'm not yet using an
+infrared LED to get more information from 
+the PSeEye.
+											changed pt in tracking manager from getVectorGlintToPupil to getVectorPupil (a new function in eyeTracker which returns pupil Centroid).
+eyeFinding very inconsistent in odd 
+lighting conditions. 
+											Keep the haarfinder code, but comment it out and restore the contourFinder code, which more consistently grabs eyes in extremely bright conditions. Create booleans to control the eyeFinding method.
+contourfinder not great
+											make a boolean to control whether the eyetracker uses haar or contours. Use the program in a sufficiently dark space.
+calibration works, but the eyetracking isn't
+very robust
+											restore glint tracking, which is now opional, using a boolean. Add more gui sliders to control glint threshold and size. Putting a bright LED on the PS3eye makes it possible to detect glints, but if there aren't any or you don't have an LED there is now the option to just use the pupil centroid.
+
+
