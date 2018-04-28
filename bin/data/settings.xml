@@ -1,0 +1,23 @@
+<group>
+	<Eye_Threshold>0</Eye_Threshold>
+	<Pupil_Threshold>1</Pupil_Threshold>
+	<Minimum_Pupil_Size>1050</Minimum_Pupil_Size>
+	<Maximum_Pupil_Size>20000</Maximum_Pupil_Size>
+	<Number_Of_Erosions>10</Number_Of_Erosions>
+	<Number_Of_Dilations>13</Number_Of_Dilations>
+	<Gamma>0.5</Gamma>
+	<Contrast>0.995</Contrast>
+	<Brightness>0.495</Brightness>
+	<Blur>49</Blur>
+	<Use_Erosion_and_Dilation>1</Use_Erosion_and_Dilation>
+	<Use_Gamma>1</Use_Gamma>
+	<Use_Contrast_and_Brightness>1</Use_Contrast_and_Brightness>
+	<Use_Blur>1</Use_Blur>
+	<Use_Adaptive_Threshold>1</Use_Adaptive_Threshold>
+	<Use_Adaptive_Gauss>0</Use_Adaptive_Gauss>
+<group/>
+<Darken_Image>0</Darken_Image>
+	<Glint_Threshold>244.245</Glint_Threshold>
+	<Minimum_Glint_Size>30</Minimum_Glint_Size>
+	<Maximum_Glint_Size>1400</Maximum_Glint_Size>
+</group>
